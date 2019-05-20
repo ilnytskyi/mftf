@@ -1,0 +1,92 @@
+version: '2'
+services:
+  rabbitmftf:
+    image: rabbitmq:3.7-management
+    ports:
+      - "8081:15672"
+    volumes:
+      - ./docker-files/rabbitmq/rabbitmq.conf:/etc/rabbitmq.conf:ro
+      - ./docker-files/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
+    networks:
+      - tests
+
+  dbmagentomftf:
+    build: docker-files/mariadb
+    container_name: mariadb-magento-mftf
+    working_dir: /application
+    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
+    volumes:
+      - ./docker-files/mariadb/dumps:/var/www
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=magento
+      - MYSQL_USER=magento
+      - MYSQL_PASSWORD=magento
+    ports:
+      - "33006:3306"
+    networks:
+      - tests
+
+  applicationmftf:
+    build: docker-files/apache-php72
+    ports:
+      - "80:80"
+    depends_on:
+      - cache
+    volumes:
+      - ./../magento:/var/www/html
+    expose:
+      - "9001"
+    networks:
+      tests:
+        aliases:
+          - magento2.mftf
+
+  cachemftf:
+    build: docker-files/redis
+    ports:
+      - 6379:6379
+    networks:
+      - tests
+
+  varnishmftf:
+    build: docker-files/varnish
+    ports:
+    - "8080:80"
+    environment:
+      - VCL_CONFIG=docker-files/varnish/default.vcl
+    depends_on:
+      - applicationmftf
+    networks:
+      - tests
+
+  seleniummftf:
+    image: magestore/mftf-selenium-chrome
+    ports:
+      - 5900:5900
+    volumes:
+      - /dev/shm:/dev/shm
+    environment:
+      START_XVFB: "false"
+    networks:
+      - tests
+
+  alluremftf:
+    image: "frankescobar/allure-docker-service"
+    environment:
+      CHECK_RESULTS_EVERY_SECONDS: 1
+    ports:
+      - "4040:4040"
+      - "5050:5050"
+    volumes:
+      - ./../magento/dev/tests/acceptance/tests/_output/allure-results:/app/allure-results
+    networks:
+      - tests
+
+volumes:
+  applicationdata:
+  magento-database:
+  varnish:
+
+networks:
+  tests:

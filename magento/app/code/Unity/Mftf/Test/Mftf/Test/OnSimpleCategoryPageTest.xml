@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="OnSimpleCategoryPageTest">
+        <annotations>
+            <features value="Unity"/>
+            <stories value="Go to category page"/>
+            <title value="Go to the cat page"/>
+            <description value="User should be able to open a simple cat page"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="UNITY-0001"/>
+            <group value="unity"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="unitySimpleCategory1" stepKey="createSimpleCategory"/>
+        </before>
+        <wait stepKey="seeIfReload" time="10"/>
+<!--        <amOnPage url="/admin/catalog/category/edit/id/$$createSimpleCategory.return$$/" stepKey="amOnHomePage"/>-->
+        <see userInput="Unity Category 1" stepKey="finish" />
+        <wait stepKey="waitBeforeClose" time="30"/>
+    </test>
+</tests>

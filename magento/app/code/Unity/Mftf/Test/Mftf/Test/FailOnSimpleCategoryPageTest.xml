@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="FailOnSimpleCategoryPageTest">
+        <annotations>
+            <features value="Unity"/>
+            <stories value="Go to category page"/>
+            <title value="Go to the cat page"/>
+            <description value="User should not be able to open a simple cat page"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="UNITY-0000"/>
+            <group value="unity"/>
+        </annotations>
+        <amOnPage url="/" stepKey="amOnHomePage"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForElementVisible selector="{{CategoryPagesPageActionsSection.simpleCategoryButton}}" stepKey="waitForSimpleButtonVisible"/>
+        <click selector="{{CategoryPagesPageActionsSection.simpleCategoryButton}}" stepKey="clickAddNewPage"/>
+        <amOnPage url="{{CategoryPagesPage.url}}" stepKey="amOnSimpleCategoryPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <see userInput="{{_simpleCategory.page_heading}}" selector="#ui-id-4" stepKey="seePageHeading"/>
+        <see userInput="{{_simpleCategory.content}}" stepKey="seeContent"/>
+    </test>
+</tests>

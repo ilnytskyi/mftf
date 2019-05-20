@@ -1,0 +1,20 @@
+composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition .
+
+bin/magento module:disable Klarna_Kp
+
+php bin/magento setup:install \
+--base-url="http://magento2.mftf/" \
+--db-host="mariadb-magento-mftf" \
+--db-name="magento" \
+--db-user="root" \
+--db-password="root" \
+--admin-firstname="admin" \
+--admin-lastname="admin" \
+--admin-email="admin@example.com" \
+--admin-user="admin" \
+--admin-password="Admin123" \
+--language="en_US" \
+--currency="USD" \
+--timezone="Europe/Warsaw" \
+--use-rewrites="1" \
+--backend-frontname="admin"
