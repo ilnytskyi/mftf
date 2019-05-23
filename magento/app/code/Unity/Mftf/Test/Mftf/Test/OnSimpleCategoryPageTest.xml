@@ -12,12 +12,24 @@
             <group value="unity"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginToAdminPanel" stepKey="loginAsAdmin"/>
             <createData entity="unitySimpleCategory1" stepKey="createSimpleCategory"/>
+            <amOnPage url="/admin/catalog/category/index" stepKey="reloadCategories"/>
+            <click selector="div#extdd-5" stepKey="secondChildCategory"/>
+            <waitForPageLoad stepKey="waitForCategoryTreeLoad"/>
+            <see userInput="Unity Category 1" stepKey="confirmCategoryCreated" />
         </before>
-        <wait stepKey="seeIfReload" time="10"/>
-<!--        <amOnPage url="/admin/catalog/category/edit/id/$$createSimpleCategory.return$$/" stepKey="amOnHomePage"/>-->
+        <after>
+            <amOnPage url="/admin/catalog/category/index" stepKey="toCategoryPagesToDelete"/>
+            <click selector="div#extdd-5" stepKey="secondChildCategoryDelete"/>
+            <waitForPageLoad stepKey="waitForCategoryTreeLoadDelete"/>
+            <see userInput="Unity Category 1" stepKey="confirmCategoryCreatedDelete" />
+            <click selector="#delete" stepKey="removeCreatedCategory"/>
+            <click selector=".confirm .action-primary.action-accept" stepKey="confirmDelete"/>
+        </after>
+        <amOnPage url="/" stepKey="goToHomePage"/>
+        <!--        <amOnPage url="/admin/catalog/category/edit/id/$$createSimpleCategory.return[val]$$/" stepKey="amOnHomePage"/>-->
         <see userInput="Unity Category 1" stepKey="finish" />
-        <wait stepKey="waitBeforeClose" time="30"/>
+        <wait stepKey="waitBeforeCloseTest" time="5"/>
     </test>
 </tests>

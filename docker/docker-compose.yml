@@ -32,7 +32,7 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - cache
+      - cachemftf
     volumes:
       - ./../magento:/var/www/html
     expose:
