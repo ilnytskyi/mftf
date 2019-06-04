@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ExtendedAdminLoginTest" extends="AdminLoginTest">
+        <annotations>
+            <features value="Backend"/>
+            <stories value="Login on the Admin Login page and go to Config page"/>
+            <title value="Admin should be able to log into the Magento Admin backend"/>
+            <description value="Admin should be able to see config page in the Magento Admin backend"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="UNITY-0011"/>
+            <group value="unity"/>
+            <group value="example"/>
+            <group value="login"/>
+        </annotations>
+
+        <amOnPage url="{{AdminLoginPage.url}}/system_config/" stepKey="goToConfigPage"/>
+        <see userInput="Configuratiom" stepKey="extendedTestEnd"/>
+    </test>
+</tests>

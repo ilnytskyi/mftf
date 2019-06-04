@@ -1,0 +1,59 @@
+steps 
+
+composer require --dev magento/magento2-functional-testing-framework
+
+vendor/bin/mftf build:project
+
+# configure .env in dev/tests/acceptance/.env
+#
+# make sure there are correct hosts in container and outside, better to be 80:80
+# make sure dockers see each other in the network
+
+MAGENTO_BASE_URL=http://0.0.0.0:8072
+MAGENTO_BACKEND_NAME=admin_lb2hpx
+MAGENTO_ADMIN_USERNAME=admin
+MAGENTO_ADMIN_PASSWORD=admin777
+SELENIUM_HOST=127.0.0.1
+SELENIUM_PORT=4444
+SELENIUM_PROTOCOL=http
+SELENIUM_PATH=/wd/hub
+CUSTOM_MODULE_PATHS=/var/www/html/app/code/*/*/Test/Mftf   ## use correct path
+MODULE_WHITELIST=Magento_Catalog ##only mmagento modules here
+
+
+#if mapped correctly
+
+vendor/bin/mftf generate:urn-catalog --force .idea    
+
+# Generate and run all tests
+vendor/bin/mftf generate:tests
+
+cd dev/tests/acceptance
+
+ ../../../vendor/bin/codecept run functional -c ../../../dev/tests/acceptance/codeception.yml
+
+# Run single test
+ ../../../vendor/bin/mftf run:test AdminLoginTest
+
+cd dev/tests/acceptance && ../../../vendor/bin/mftf run:test AdminLoginTest
+
+## VNC Viewer
+vncviewer localhost:5900
+
+#Password: `secret`
+
+
+#To clean up the previously generated tests, and then generate and run a single test AdminLoginTest, run:
+
+vendor/bin/mftf run:test OnCategoryPage --remove
+
+#######
+#####
+######
+USE Robo to generate
+
+../../../vendor/bin/robo generate:tests OnSimpleCategoryPageTest
+
+#codecept to run certain group
+../../../vendor/bin/codecept run functional --group unity
+
