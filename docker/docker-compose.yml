@@ -32,7 +32,7 @@ services:
       - "4040:4040"
       - "5050:5050"
     volumes:
-      - './../magento/dev/tests/acceptance/tests/_output/allure-results:/app/allure-results:delegated'
+      - './../magento/dev/tests/_output/allure-results:/app/allure-results:delegated'
     networks:
       - tests
 

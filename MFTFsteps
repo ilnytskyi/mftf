@@ -37,10 +37,10 @@ cd dev/tests/acceptance
 
  ../../../vendor/bin/codecept run functional -c ../../../dev/tests/acceptance/codeception.yml
 
-# Run single test
- ../../../vendor/bin/mftf run:test AdminLoginTest
+# Run single test force skip magento installation
+ bin/mftf run:test MagentoStoreTest -f
 
-cd dev/tests/acceptance && ../../../vendor/bin/mftf run:test AdminLoginTest
+cd dev/tests/acceptance && bin/mftf run:test MagentoStoreTest -f
 
 ## VNC Viewer
 vncviewer localhost:5900
@@ -48,16 +48,16 @@ vncviewer localhost:5900
 #Password: `secret`
 
 
-#To clean up the previously generated tests, and then generate and run a single test AdminLoginTest, run:
+#To clean up the previously generated tests, and then generate and run a single test DevDocsTest, run:
 
-vendor/bin/mftf run:test OnCategoryPage --remove
+vendor/bin/mftf run:test DevDocsTest -f --remove
 
 #######
 #####
 ######
 USE Robo to generate
 
-../../../vendor/bin/robo generate:tests OnCategoryPageTest
+../../../vendor/bin/robo generate:tests DevDocsTest
 
 #codecept to run certain group
 ../../../vendor/bin/codecept run functional --group stas
