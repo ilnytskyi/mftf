@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="MagentoStoreTest">
+        <annotations>
+            <features value="Vendor"/>
+            <stories value="Go to magento.com page"/>
+            <title value="Go to mg page"/>
+            <description value="User should be able to open a magento.com page"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="VENDOR-0005"/>
+            <group value="vendor"/>
+        </annotations>
+        <amOnPage url="/" stepKey="goToMagentoHomePage"/>
+        <see userInput="Magento" stepKey="finish" />
+        <wait stepKey="waitBeforeCloseTest" time="5"/>
+    </test>
+</tests>
