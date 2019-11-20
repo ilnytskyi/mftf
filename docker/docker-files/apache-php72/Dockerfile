@@ -62,3 +62,4 @@ ADD crontab /var/www/install/crontab.www-data
 ADD auth.json /root/.composer/auth.json
 ADD auth.json /var/www/.composer/auth.json
 
+RUN echo "root:root" | chpasswd

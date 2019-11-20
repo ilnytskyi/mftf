@@ -3,6 +3,8 @@ steps
 composer require --dev magento/magento2-functional-testing-framework
 
 vendor/bin/mftf build:project
+#or
+bin/mftf build:project
 
 # configure .env in dev/tests/acceptance/.env
 #
@@ -23,10 +25,13 @@ MODULE_WHITELIST=Magento_Catalog ##only mmagento modules here
 
 #if mapped correctly
 
-vendor/bin/mftf generate:urn-catalog --force .idea    
+vendor/bin/mftf generate:urn-catalog --force .idea
+#or
+bin/mftf generate:urn-catalog --force .idea
 
 # Generate and run all tests
 vendor/bin/mftf generate:tests
+bin/mftf generate:tests
 
 cd dev/tests/acceptance
 
